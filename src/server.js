@@ -1,12 +1,24 @@
-(async () => {
+const express = require('express');
+const app = express();
+const Find = require('./Controllers/Find');
+
+app.get('/products', async (req, res) => {
+    const products = await Find.allProducts(req.query);
+    //console.log(req.query);
+    res.send(products);
+});
+
+app.listen(3333);
+
+/*(async () => {
     const {Op} = require('sequelize');
     //const createDb = require('./Model/Conn/createDb');
-    const database = require('./Model/Conn/dbconn');
-    const Store = require('./Model/Tables/Store');
-    const Insert = require('./Model/Insert');
-    const findAll = require('./Model/FindAll');
-    const Update = require('./Model/Update');
-    const Delete = require('./Model/Delete');
+    const database = require('./Models/Conn/dbconn');
+    const Store = require('./Models/Tables/Store');
+    const Insert = require('./Models/Insert');
+    const findAll = require('./Models/FindAll');
+    const Update = require('./Models/Update');
+    const Delete = require('./Models/Delete');
 
     try{
         //await createDb.create();
@@ -37,9 +49,9 @@
 
         products = await findAll.products({
             include: Store,
-            /*where:{
-                description: {[Op.like]:'Monitor%'}
-            }, */
+            //where:{
+              //  description: {[Op.like]:'Monitor%'}
+            //}, 
             order:[['price', 'DESC']],
             limit: 2
         });
@@ -51,4 +63,4 @@
     }catch(err){
         console.log(err);
     }
-})();
+})();*/
