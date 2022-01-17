@@ -29,6 +29,10 @@ const Functions = {
             }
         }
         return conditions;
+    },
+    orderSanitizer(order){
+        order = order.replaceAll('[', '').replaceAll(']', '').replaceAll(' ', '').split(',');
+        return [order];
     }
 };
 
