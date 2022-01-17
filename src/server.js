@@ -4,7 +4,6 @@ const Find = require('./Controllers/Find');
 
 app.get('/products', async (req, res) => {
     const products = await Find.allProducts(req.query);
-    //console.log(req.query);
     res.send(products);
 });
 
