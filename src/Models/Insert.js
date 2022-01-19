@@ -3,7 +3,7 @@ const Store = require("./Tables/Store");
 
 const insert = {
     async product(name, price, description, storeId){
-        await Product.create({
+        return await Product.create({
             name,
             price,
             description,
@@ -12,7 +12,7 @@ const insert = {
     },
 
     async store(name){
-        await Store.create({name});
+        return await Store.create({name});
     }
 };
 
