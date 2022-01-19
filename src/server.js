@@ -3,8 +3,10 @@ const bodyParser = require('body-parser');
 const Joi = require('joi');
 const app = express();
 
+//dentro do find está a função que cria todas as tabelas
 const Find = require('./Controllers/Find');
 const Insert = require('./Controllers/Insert');
+const Delete = require('./Controllers/Delete');
 
 
 app.use(bodyParser.json());
@@ -30,12 +32,29 @@ app.post('/store', async (req, res) => {
     res.send(JSON.stringify(await Insert.store(body.value)));
 });
 
+app.delete('/store', async (req, res) => {
+    const schema = Joi.object().keys({
+        id: Joi.number().min(1).required()
+    });
+
+    const body = schema.validate(req.body);
+    
+    if(body.error){
+        res.status(400);
+        res.send(JSON.stringify(body.error.details));
+        
+        return false;
+    }
+
+    res.send(JSON.stringify(await Delete.store(body.value)));
+});
+
 app.get('/products', async (req, res) => {
     const products = await Find.allProducts(req.query);
     res.send(products);
 });
 
-app.post('/products', async (req, res) => {
+app.post('/product', async (req, res) => {
     const schema = Joi.object().keys({
         name: Joi.string().min(3).max(100).required(),
         price: Joi.number().min(0).required(),
@@ -53,7 +72,23 @@ app.post('/products', async (req, res) => {
 
     res.send(JSON.stringify(await Insert.product(body.value)));
 
+});
 
+app.delete('/product', async (req, res) => {
+    const schema = Joi.object().keys({
+        id: Joi.number().min(1).required()
+    });
+
+    const body = schema.validate(req.body);
+    
+    if(body.error){
+        res.status(400);
+        res.send(JSON.stringify(body.error.details));
+        
+        return false;
+    }
+
+    res.send(JSON.stringify(await Delete.product(body.value)));
 });
 
 app.listen(3333);

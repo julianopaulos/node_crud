@@ -1,6 +1,4 @@
-const database = require('../Models/Conn/dbconn');
 const Insert = require('../Models/Insert');
-
 
 const Inserts = {
     async product(conditions){

@@ -29,7 +29,7 @@ const Find = {
         if(limit){
             countLimit = Number.parseInt(limit);
         }
-        console.log('order ', orderCondition);
+        
         return await findAll.stores({
             where: where,
             order: orderCondition,
@@ -59,7 +59,7 @@ const Find = {
         if(limit){
             countLimit = Number.parseInt(limit);
         }
-        console.log('order ', orderCondition);
+        
         return await findAll.products({
             include: Store,
             where: where,
