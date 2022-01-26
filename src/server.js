@@ -55,6 +55,27 @@ app.delete('/store', async (req, res) => {
     res.send(JSON.stringify(await Delete.store(body.value)));
 });
 
+
+app.put('/store', async (req, res) => {
+    const schema = Joi.object().keys({
+        id: Joi.number().min(1).required(),
+        name: Joi.string().min(3).max(100).required()
+    });
+
+    const body = schema.validate(req.body);
+    
+    if(body.error){
+        res.status(400);
+        res.send(JSON.stringify(body.error.details));
+        
+        return false;
+    }
+
+    res.send(JSON.stringify(await Update.store(body.value)));
+});
+
+
+
 app.get('/products', async (req, res) => {
     const products = await Find.allProducts(req.query);
     res.send(products);
