@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const Joi = require('joi');
 const app = express();
 
@@ -7,8 +8,13 @@ const app = express();
 const Find = require('./Controllers/Find');
 const Insert = require('./Controllers/Insert');
 const Delete = require('./Controllers/Delete');
+const Update = require('./Controllers/Update');
 
+const corsOptions = {
+    origin: 'http://localhost'
+};
 
+app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/stores', async (req, res) => {
@@ -89,6 +95,28 @@ app.delete('/product', async (req, res) => {
     }
 
     res.send(JSON.stringify(await Delete.product(body.value)));
+});
+
+app.put('/product', async (req, res) => {
+    const schema = Joi.object().keys({
+        id: Joi.number().min(1).required(),
+        name: Joi.string().min(3).max(100).required(),
+        price: Joi.number().min(0).required(),
+        description: Joi.string().min(3).max(250).required(),
+        storeId: Joi.number().min(1).required()
+    });
+
+    const body = schema.validate(req.body);
+    
+    if(body.error){
+        res.status(400);
+        res.send(JSON.stringify(body.error.details));
+        
+        return false;
+    }
+
+    res.send(JSON.stringify(await Update.product(body.value)));
+
 });
 
 app.listen(3333);
