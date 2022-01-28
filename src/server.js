@@ -5,6 +5,7 @@ var fs = require('fs');
 var path = require('path');
 const logger = require('morgan');
 const app = express();
+const { errors } = require('celebrate');
 
 
 const routes = require('./routes');
@@ -20,5 +21,6 @@ app.use(logger('dev', {stream: accessLogStream}));
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(routes);
+app.use(errors());
 
 app.listen(3333);

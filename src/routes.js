@@ -1,5 +1,6 @@
 const express = require('express');
-
+const jwt = require('jsonwebtoken');
+const { Joi, celebrate, Segments } = require('celebrate');
 
 //dentro do find está a função que cria todas as tabelas
 const Find = require('./Controllers/Find');
@@ -16,21 +17,19 @@ routes.get('/stores', async (req, res) => {
 });
 
 
-routes.post('/store', async (req, res) => {
-    const schema = Joi.object().keys({
-        name: Joi.string().min(3).max(100).required()
-    });
-    const body = schema.validate(req.body);
-    
-    if(body.error){
-        res.status(400);
-        res.send(JSON.stringify(body.error.details));
-        
-        return false;
+routes.post('/store', 
+    celebrate({
+        [Segments.BODY]: Joi.object().keys({
+            name: Joi.string().min(3).max(100).required()
+        }),
+        [Segments.HEADERS]: Joi.object().keys({
+            authorization: Joi.string().required()
+        }).options({ allowUnknown: true })
+    }), 
+    async (req, res) => {
+        res.send(JSON.stringify(await Insert.store(req.body)));
     }
-
-    res.send(JSON.stringify(await Insert.store(body.value)));
-});
+);
 
 
 routes.delete('/store', async (req, res) => {
@@ -137,7 +136,5 @@ routes.put('/product', async (req, res) => {
     res.send(JSON.stringify(await Update.product(body.value)));
 
 });
-
-
 
 module.exports = routes;
