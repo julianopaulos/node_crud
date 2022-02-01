@@ -1,3 +1,4 @@
+require('dotenv/config');
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const { Joi, celebrate, Segments } = require('celebrate');
@@ -10,10 +11,25 @@ const Update = require('./Controllers/Update');
 
 const routes = express.Router();
 
+routes.post('/auth', 
+    celebrate({
+        [Segments.BODY]: Joi.object().keys({
+            username: Joi.string().min(3).max(100).required(),
+            password: Joi.string().min(8).max(100).required()
+        })
+    }),
+    async (req, res) => {
+        const token = jwt.sign({ id: 1 }, process.env.SECRET_KEY, {
+            expiresIn: 300 //sec
+        });
+        return res.json({'token': token});
+    }
+);
+
 
 routes.get('/stores', async (req, res) => {
     const products = await Find.allStores(req.query);
-    res.send(products);
+    res.json(products);
 });
 
 
@@ -27,7 +43,7 @@ routes.post('/store',
         }).options({ allowUnknown: true })
     }), 
     async (req, res) => {
-        res.send(JSON.stringify(await Insert.store(req.body)));
+        res.json(await Insert.store(req.body));
     }
 );
 
@@ -42,7 +58,7 @@ routes.delete('/store',
         }).options({ allowUnknown: true })
     }),
     async (req, res) => {
-        res.send(JSON.stringify(await Delete.store(req.body)));
+        res.json(await Delete.store(req.body));
     }
 );
 
@@ -58,7 +74,7 @@ routes.put('/store',
         }).options({ allowUnknown: true })
     }),
     async (req, res) => {
-        res.send(JSON.stringify(await Update.store(req.body)));
+        res.json(await Update.store(req.body));
     }
 );
 
@@ -66,7 +82,7 @@ routes.put('/store',
 
 routes.get('/products', async (req, res) => {
     const products = await Find.allProducts(req.query);
-    res.send(products);
+    res.json(products);
 });
 
 
@@ -82,7 +98,7 @@ routes.post('/product', celebrate({
         }).options({ allowUnknown: true })
     }),
     async (req, res) => {
-        res.send(JSON.stringify(await Insert.product(req.body)));
+        res.json(await Insert.product(req.body));
     }
 );
 
@@ -96,7 +112,7 @@ routes.delete('/product', celebrate({
         }).options({ allowUnknown: true })
     }),
     async (req, res) => {
-        res.send(JSON.stringify(await Delete.product(req.body)));
+        res.json(await Delete.product(req.body));
     }
 );
 
@@ -114,7 +130,7 @@ routes.put('/product', celebrate({
         }).options({ allowUnknown: true })
     }),
     async (req, res) => {
-        res.send(JSON.stringify(await Update.product(req.body)));
+        res.json(await Update.product(req.body));
     }
 );
 
