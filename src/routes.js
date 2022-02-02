@@ -3,6 +3,8 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const { Joi, celebrate, Segments } = require('celebrate');
 
+const verifyJwt = require('./Utils/verifyJWT');
+
 //dentro do find está a função que cria todas as tabelas
 const Find = require('./Controllers/Find');
 const Insert = require('./Controllers/Insert');
@@ -32,11 +34,8 @@ routes.get('/stores', celebrate({
             authorization: Joi.string().required()
         }).options({ allowUnknown: true })
     }),
+    verifyJwt,
     async (req, res) => {
-
-        const verify_token = jwt.verify(req.headers.authorization, process.env.SECRET_KEY, (err) => {return err});
-        if(Object(verify_token).hasOwnProperty('message'))return res.status(400).json(verify_token.message);
-
         const stores = await Find.allStores(req.query);
         res.json(stores);
     }
@@ -51,11 +50,9 @@ routes.post('/store',
         [Segments.HEADERS]: Joi.object().keys({
             authorization: Joi.string().required()
         }).options({ allowUnknown: true })
-    }), 
+    }),
+    verifyJwt,
     async (req, res) => {
-        const verify_token = jwt.verify(req.headers.authorization, process.env.SECRET_KEY, (err) => {return err});
-        if(Object(verify_token).hasOwnProperty('message'))return res.status(400).json(verify_token.message);
-
         res.json(await Insert.store(req.body));
     }
 );
@@ -70,10 +67,8 @@ routes.delete('/store',
             authorization: Joi.string().required()
         }).options({ allowUnknown: true })
     }),
+    verifyJwt,
     async (req, res) => {
-        const verify_token = jwt.verify(req.headers.authorization, process.env.SECRET_KEY, (err) => {return err});
-        if(Object(verify_token).hasOwnProperty('message'))return res.status(400).json(verify_token.message);
-
         res.json(await Delete.store(req.body));
     }
 );
@@ -89,10 +84,8 @@ routes.put('/store',
             authorization: Joi.string().required()
         }).options({ allowUnknown: true })
     }),
+    verifyJwt,
     async (req, res) => {
-        const verify_token = jwt.verify(req.headers.authorization, process.env.SECRET_KEY, (err) => {return err});
-        if(Object(verify_token).hasOwnProperty('message'))return res.status(400).json(verify_token.message);
-
         res.json(await Update.store(req.body));
     }
 );
@@ -104,10 +97,8 @@ routes.get('/products', celebrate({
             authorization: Joi.string().required()
         }).options({ allowUnknown: true })
     }),
+    verifyJwt,
     async (req, res) => {
-        const verify_token = jwt.verify(req.headers.authorization, process.env.SECRET_KEY, (err) => {return err});
-        if(Object(verify_token).hasOwnProperty('message'))return res.status(400).json(verify_token.message);
-
         const products = await Find.allProducts(req.query);
         res.json(products);
     }
@@ -125,10 +116,8 @@ routes.post('/product', celebrate({
             authorization: Joi.string().required()
         }).options({ allowUnknown: true })
     }),
+    verifyJwt,
     async (req, res) => {
-        const verify_token = jwt.verify(req.headers.authorization, process.env.SECRET_KEY, (err) => {return err});
-        if(Object(verify_token).hasOwnProperty('message'))return res.status(400).json(verify_token.message);
-
         res.json(await Insert.product(req.body));
     }
 );
@@ -142,10 +131,8 @@ routes.delete('/product', celebrate({
             authorization: Joi.string().required()
         }).options({ allowUnknown: true })
     }),
+    verifyJwt,
     async (req, res) => {
-        const verify_token = jwt.verify(req.headers.authorization, process.env.SECRET_KEY, (err) => {return err});
-        if(Object(verify_token).hasOwnProperty('message'))return res.status(400).json(verify_token.message);
-
         res.json(await Delete.product(req.body));
     }
 );
@@ -163,10 +150,8 @@ routes.put('/product', celebrate({
             authorization: Joi.string().required()
         }).options({ allowUnknown: true })
     }),
+    verifyJwt,
     async (req, res) => {
-        const verify_token = jwt.verify(req.headers.authorization, process.env.SECRET_KEY, (err) => {return err});
-        if(Object(verify_token).hasOwnProperty('message'))return res.status(400).json(verify_token.message);
-
         res.json(await Update.product(req.body));
     }
 );
