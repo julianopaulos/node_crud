@@ -20,17 +20,27 @@ routes.post('/auth',
     }),
     async (req, res) => {
         const token = jwt.sign({ id: 1 }, process.env.SECRET_KEY, {
-            expiresIn: 300 //sec
+            expiresIn: 60 //sec
         });
         return res.json({'token': token});
     }
 );
 
 
-routes.get('/stores', async (req, res) => {
-    const products = await Find.allStores(req.query);
-    res.json(products);
-});
+routes.get('/stores', celebrate({
+        [Segments.HEADERS]: Joi.object().keys({
+            authorization: Joi.string().required()
+        }).options({ allowUnknown: true })
+    }),
+    async (req, res) => {
+
+        const verify_token = jwt.verify(req.headers.authorization, process.env.SECRET_KEY, (err) => {return err});
+        if(Object(verify_token).hasOwnProperty('message'))return res.status(400).json(verify_token.message);
+
+        const stores = await Find.allStores(req.query);
+        res.json(stores);
+    }
+);
 
 
 routes.post('/store', 
@@ -43,6 +53,9 @@ routes.post('/store',
         }).options({ allowUnknown: true })
     }), 
     async (req, res) => {
+        const verify_token = jwt.verify(req.headers.authorization, process.env.SECRET_KEY, (err) => {return err});
+        if(Object(verify_token).hasOwnProperty('message'))return res.status(400).json(verify_token.message);
+
         res.json(await Insert.store(req.body));
     }
 );
@@ -58,6 +71,9 @@ routes.delete('/store',
         }).options({ allowUnknown: true })
     }),
     async (req, res) => {
+        const verify_token = jwt.verify(req.headers.authorization, process.env.SECRET_KEY, (err) => {return err});
+        if(Object(verify_token).hasOwnProperty('message'))return res.status(400).json(verify_token.message);
+
         res.json(await Delete.store(req.body));
     }
 );
@@ -74,16 +90,28 @@ routes.put('/store',
         }).options({ allowUnknown: true })
     }),
     async (req, res) => {
+        const verify_token = jwt.verify(req.headers.authorization, process.env.SECRET_KEY, (err) => {return err});
+        if(Object(verify_token).hasOwnProperty('message'))return res.status(400).json(verify_token.message);
+
         res.json(await Update.store(req.body));
     }
 );
 
 
 
-routes.get('/products', async (req, res) => {
-    const products = await Find.allProducts(req.query);
-    res.json(products);
-});
+routes.get('/products', celebrate({
+        [Segments.HEADERS]: Joi.object().keys({
+            authorization: Joi.string().required()
+        }).options({ allowUnknown: true })
+    }),
+    async (req, res) => {
+        const verify_token = jwt.verify(req.headers.authorization, process.env.SECRET_KEY, (err) => {return err});
+        if(Object(verify_token).hasOwnProperty('message'))return res.status(400).json(verify_token.message);
+
+        const products = await Find.allProducts(req.query);
+        res.json(products);
+    }
+);
 
 
 routes.post('/product', celebrate({
@@ -98,6 +126,9 @@ routes.post('/product', celebrate({
         }).options({ allowUnknown: true })
     }),
     async (req, res) => {
+        const verify_token = jwt.verify(req.headers.authorization, process.env.SECRET_KEY, (err) => {return err});
+        if(Object(verify_token).hasOwnProperty('message'))return res.status(400).json(verify_token.message);
+
         res.json(await Insert.product(req.body));
     }
 );
@@ -112,6 +143,9 @@ routes.delete('/product', celebrate({
         }).options({ allowUnknown: true })
     }),
     async (req, res) => {
+        const verify_token = jwt.verify(req.headers.authorization, process.env.SECRET_KEY, (err) => {return err});
+        if(Object(verify_token).hasOwnProperty('message'))return res.status(400).json(verify_token.message);
+
         res.json(await Delete.product(req.body));
     }
 );
@@ -130,6 +164,9 @@ routes.put('/product', celebrate({
         }).options({ allowUnknown: true })
     }),
     async (req, res) => {
+        const verify_token = jwt.verify(req.headers.authorization, process.env.SECRET_KEY, (err) => {return err});
+        if(Object(verify_token).hasOwnProperty('message'))return res.status(400).json(verify_token.message);
+
         res.json(await Update.product(req.body));
     }
 );
