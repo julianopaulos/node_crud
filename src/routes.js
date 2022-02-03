@@ -13,6 +13,9 @@ const Update = require('./Controllers/Update');
 
 const routes = express.Router();
 
+
+//============================================================================AUTH
+
 routes.post('/auth', 
     celebrate({
         [Segments.BODY]: Joi.object().keys({
@@ -22,12 +25,15 @@ routes.post('/auth',
     }),
     async (req, res) => {
         const token = jwt.sign({ id: 1 }, process.env.SECRET_KEY, {
-            expiresIn: 60 //sec
+            expiresIn: 6000 //sec
         });
         return res.json({'token': token});
     }
 );
 
+
+
+//============================================================================STORES
 
 routes.get('/stores', celebrate({
         [Segments.HEADERS]: Joi.object().keys({
@@ -91,6 +97,8 @@ routes.put('/store',
 );
 
 
+
+//============================================================================PRODUCTS
 
 routes.get('/products', celebrate({
         [Segments.HEADERS]: Joi.object().keys({
