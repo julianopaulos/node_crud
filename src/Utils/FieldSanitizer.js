@@ -10,7 +10,7 @@ function verifyFieldExists(obj, arr){
 
 const Functions = {
     conditionFilter(where){
-        if(!typeof where === 'string') return [];
+        if(typeof where !== 'string') return [];
 
         let conditions = [];
         where = where.replaceAll('[', '').replaceAll(']', '').split(',');
