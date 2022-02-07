@@ -1,12 +1,18 @@
 const {Op} = require('sequelize');
-const database = require('../Models/Conn/dbconn');
 const Store = require('../Models/Tables/Store');
 const findAll = require('../Models/FindAll');
 const Sanitizers = require("../Utils/FieldSanitizer");
-(async () => {
-    await database.sync();
-})();
+
 const Find = {
+    async user(field, value){
+        return await findAll.users({
+            where: {
+                [field]: value
+            },
+            limit: 1
+        });
+    },
+
     async allStores(conditions){
         let {find, order, limit} = conditions;
         let where = {};

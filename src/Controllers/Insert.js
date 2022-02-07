@@ -1,6 +1,10 @@
 const Insert = require('../Models/Insert');
 
 const Inserts = {
+    async user(conditions){
+        return await Insert.user(...Object.values(conditions));
+    },
+
     async product(conditions){
         
         return await Insert.product(...Object.values(conditions));

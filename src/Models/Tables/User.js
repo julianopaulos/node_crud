@@ -16,6 +16,7 @@ const User = database.define('user', {
     username: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
         comment: 'Guarda o nome de usuário para login'
     },
     email: {
@@ -29,8 +30,9 @@ const User = database.define('user', {
         comment: 'Guarda a senha do usuário'
     },
     active: {
-        type: Sequelize.BOOL,
+        type: Sequelize.BOOLEAN,
         allowNull: false,
+        defaultValue: true,
         comment: 'Guarda o status do usuário (0 - desativado / 1 - ativo)'
     }
 });

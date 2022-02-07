@@ -23,4 +23,9 @@ app.use(bodyParser.json());
 app.use(routes);
 app.use(errors());
 
+const database = require('./Models/Conn/dbconn');
+(async () => {
+    await database.sync();
+})();
+
 app.listen(3333);

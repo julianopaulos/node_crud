@@ -4,14 +4,32 @@ const jwt = require('jsonwebtoken');
 const { Joi, celebrate, Segments } = require('celebrate');
 
 const verifyJwt = require('./Utils/verifyJWT');
+const verifyUsername = require('./Utils/verifyUsername');
 
-//dentro do find está a função que cria todas as tabelas
 const Find = require('./Controllers/Find');
 const Insert = require('./Controllers/Insert');
 const Delete = require('./Controllers/Delete');
 const Update = require('./Controllers/Update');
 
 const routes = express.Router();
+
+
+//============================================================================USER
+routes.post('/user', 
+    celebrate({
+        [Segments.BODY]: Joi.object().keys({
+            name: Joi.string().min(3).max(200).required(),
+            username: Joi.string().min(3).max(100).required(),
+            email: Joi.string().email().required(),
+            password: Joi.string().min(8).max(100).required()
+        })
+    }),
+    verifyUsername,
+    async (req, res) => {
+        res.json(await Insert.user(req.body));
+    }
+);
+
 
 
 //============================================================================AUTH
