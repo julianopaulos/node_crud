@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const { Joi, celebrate, Segments } = require('celebrate');
 
 const verifyJwt = require('./Utils/verifyJWT');
-const verifyUsername = require('./Utils/verifyUsername');
+const verifyUser = require('./Utils/verifyUser');
 
 const Find = require('./Controllers/Find');
 const Insert = require('./Controllers/Insert');
@@ -24,7 +24,7 @@ routes.post('/user',
             password: Joi.string().min(8).max(100).required()
         })
     }),
-    verifyUsername,
+    verifyUser.username,
     async (req, res) => {
         res.json(await Insert.user(req.body));
     }
@@ -41,6 +41,7 @@ routes.post('/auth',
             password: Joi.string().min(8).max(100).required()
         })
     }),
+    verifyUser.auth,
     async (req, res) => {
         const token = jwt.sign({ id: 1 }, process.env.SECRET_KEY, {
             expiresIn: 6000 //sec
