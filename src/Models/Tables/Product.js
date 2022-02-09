@@ -1,33 +1,33 @@
-const Sequelize = require('sequelize');
-const database = require('../Conn/dbconn');
-const Store = require("./Store");
+import { INTEGER, STRING, DOUBLE } from 'sequelize';
+import database from '../Conn/dbconn.js';
+import Store from "./Store.js";
 
 const Product = database.define('product', {
     id: {
-        type: Sequelize.INTEGER,
+        type: INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
     },
     name: {
-        type: Sequelize.STRING,
+        type: STRING,
         allowNull: false,
         comment: 'Guarda o nome do produto'
     },
     price: {
-        type: Sequelize.DOUBLE,
+        type: DOUBLE,
         allowNull: false,
         comment: 'Guarda o preço do produto'
     },
     description: {
-        type: Sequelize.STRING,
+        type: STRING,
         comment: 'Guarda a descricao do produto'
     },
     storeId: {
-        type: Sequelize.INTEGER,
+        type: INTEGER,
         allowNull: false,
         comment: 'Guarda o Id da loja que o produto pertence'
     }
 });
 Product.belongsTo(Store);
-module.exports = Product;
+export default Product;

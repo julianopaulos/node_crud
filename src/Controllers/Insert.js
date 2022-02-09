@@ -1,4 +1,4 @@
-const Insert = require('../Models/Insert');
+import Insert from '../Models/Insert.js';
 
 const Inserts = {
     async user(conditions){
@@ -15,4 +15,4 @@ const Inserts = {
     }
 }
 
-module.exports = Inserts;
+export default Inserts;

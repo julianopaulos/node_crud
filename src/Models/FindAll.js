@@ -1,6 +1,6 @@
-const Product = require("./Tables/Product");
-const Store = require("./Tables/Store");
-const User = require("./Tables/User");
+import Product from "./Tables/Product.js";
+import Store from "./Tables/Store.js";
+import User from "./Tables/User.js";
 
 const select = {
     async users(conditions){
@@ -40,4 +40,4 @@ const select = {
     }
 };
 
-module.exports = select;
+export default select;

@@ -1,6 +1,6 @@
-const Store = require('../Models/Tables/Store');
-const findAll = require('../Models/FindAll');
-const Sanitizers = require("../Utils/FieldSanitizer");
+import Store from '../Models/Tables/Store.js';
+import findAll from '../Models/FindAll.js';
+import Sanitizers from "../Utils/FieldSanitizer.js";
 
 const Find = {
     async user(field, value){
@@ -74,4 +74,4 @@ const Find = {
     }
 }
 
-module.exports = Find;
+export default Find;

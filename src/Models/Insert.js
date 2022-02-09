@@ -1,12 +1,12 @@
-const bcrypt = require('bcryptjs');
+import hashSync from 'bcryptjs';
 
-const Product = require("./Tables/Product");
-const Store = require("./Tables/Store");
-const User = require("./Tables/User");
+import Product from "./Tables/Product.js";
+import Store from "./Tables/Store.js";
+import User from "./Tables/User.js";
 
 const insert = {
     async user(name, username, email, password) {
-        password = bcrypt.hashSync(password, 10);
+        password = hashSync(password, 10);
         return await User.create({
             name,
             username,
@@ -29,4 +29,4 @@ const insert = {
     }
 };
 
-module.exports = insert;
+export default insert;

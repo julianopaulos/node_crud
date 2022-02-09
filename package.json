@@ -2,6 +2,7 @@
   "scripts": {
     "start": "node src/server.js"
   },
+  "type": "module",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "celebrate": "^15.0.0",

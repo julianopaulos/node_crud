@@ -1,4 +1,4 @@
-const Product = require("./Tables/Product");
+import Product from "./Tables/Product.js";
 
 const select = {
     async products(id){
@@ -6,4 +6,4 @@ const select = {
     }
 };
 
-module.exports = select;
+export default select;

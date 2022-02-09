@@ -1,19 +1,21 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-var fs = require('fs');
-var path = require('path');
-const logger = require('morgan');
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import fs from 'fs';
+import path from 'path';
+import {fileURLToPath} from 'url';
+import logger from 'morgan';
 const app = express();
-const { errors } = require('celebrate');
+import { errors } from 'celebrate';
 
 
-const routes = require('./routes');
+import routes from './routes.js';
 
 const corsOptions = {
     origin: 'http://localhost'
 };
-
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 // create a write stream (in append mode)
 const accessLogStream = fs.createWriteStream(path.join(__dirname, '../log/access.log'), { flags: 'a' });
 
@@ -23,7 +25,7 @@ app.use(bodyParser.json());
 app.use(routes);
 app.use(errors());
 
-const database = require('./Models/Conn/dbconn');
+import database from './Models/Conn/dbconn.js';
 (async () => {
     await database.sync();
 })();

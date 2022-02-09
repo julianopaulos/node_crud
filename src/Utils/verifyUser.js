@@ -1,6 +1,6 @@
-const bcrypt = require('bcryptjs');
+import bcrypt from 'bcryptjs';
 
-const Find = require('../Controllers/Find');
+import Find from '../Controllers/Find.js';
 
 const validations = {
     async username(req, res, next){
@@ -26,4 +26,4 @@ const validations = {
     }
 };
 
-module.exports = validations;
+export default validations;

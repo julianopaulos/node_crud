@@ -1,5 +1,5 @@
-const Product = require("./Tables/Product");
-const Store = require("./Tables/Store");
+import Product from "./Tables/Product.js";
+import Store from "./Tables/Store.js";
 
 const deleteItem = {
     async product(id){
@@ -19,4 +19,4 @@ const deleteItem = {
     }
 }
 
-module.exports = deleteItem;
+export default deleteItem;

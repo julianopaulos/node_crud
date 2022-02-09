@@ -1,4 +1,4 @@
-const Update = require('../Models/Update');
+import Update from '../Models/Update.js';
 const Changes = {
     async product(conditions){
         const result = await Update.product(...Object.values(conditions));
@@ -11,4 +11,4 @@ const Changes = {
     }
 };
 
-module.exports = Changes;
+export default Changes;

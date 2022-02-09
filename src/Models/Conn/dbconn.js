@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize');
-require('dotenv/config');
+import Sequelize from 'sequelize';
+import 'dotenv/config';
 
 const host = process.env.DB_HOST;
 const user = process.env.DB_USER;
@@ -8,4 +8,4 @@ const port = process.env.DB_PORT;
 
 const database_connection = new Sequelize(process.env.DB_NAME, user, password, {dialect: 'mysql', host: host, port: port});
 
-module.exports = database_connection;
+export default database_connection;

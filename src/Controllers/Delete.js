@@ -1,4 +1,4 @@
-const Delete = require('../Models/Delete');
+import Delete from '../Models/Delete.js';
 
 const Deletes = {
     async product(conditions){
@@ -11,4 +11,4 @@ const Deletes = {
     }
 }
 
-module.exports = Deletes;
+export default Deletes;

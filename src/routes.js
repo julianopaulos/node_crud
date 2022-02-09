@@ -1,17 +1,17 @@
-require('dotenv/config');
-const express = require('express');
-const jwt = require('jsonwebtoken');
-const { Joi, celebrate, Segments } = require('celebrate');
+import 'dotenv/config';
+import { Router } from 'express';
+import jwt from 'jsonwebtoken';
+import { Joi, celebrate, Segments } from 'celebrate';
 
-const verifyJwt = require('./Utils/verifyJWT');
-const verifyUser = require('./Utils/verifyUser');
+import verifyJwt from './Utils/verifyJWT.js';
+import verifyUser from './Utils/verifyUser.js';
 
-const Find = require('./Controllers/Find');
-const Insert = require('./Controllers/Insert');
-const Delete = require('./Controllers/Delete');
-const Update = require('./Controllers/Update');
+import Find from './Controllers/Find.js';
+import Insert from './Controllers/Insert.js';
+import Delete from './Controllers/Delete.js';
+import Update from './Controllers/Update.js';
 
-const routes = express.Router();
+const routes = Router();
 
 
 //============================================================================USER
@@ -183,4 +183,4 @@ routes.put('/product', celebrate({
     }
 );
 
-module.exports = routes;
+export default routes;
