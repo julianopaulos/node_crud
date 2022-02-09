@@ -13,19 +13,21 @@ const Functions = {
         if(typeof where !== 'string') return [];
 
         let conditions = [];
-        where = where.replaceAll('[', '').replaceAll(']', '').split(',');
+        let field;
+        let value;
 
+        where = where.replaceAll('[', '').replaceAll(']', '').split(',');
         for(let i = 0; i < where.length; i++){
                 
             if(i % 2 === 0){
-                fields = where[i];
-                correspondings = where[i+1];
+                field = where[i];
+                value = where[i+1];
             }else{
-                fields = where[i-1];
-                correspondings = where[i];
+                field = where[i-1];
+                value = where[i];
             }
-            if(fields && correspondings && !verifyFieldExists({[fields]: correspondings}, conditions)){
-                conditions.push({[fields]: correspondings});
+            if(field && value && !verifyFieldExists({[field]: value}, conditions)){
+                conditions.push({[field]: value});
             }
         }
         return conditions;

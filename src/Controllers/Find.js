@@ -1,4 +1,3 @@
-const {Op} = require('sequelize');
 const Store = require('../Models/Tables/Store');
 const findAll = require('../Models/FindAll');
 const Sanitizers = require("../Utils/FieldSanitizer");
@@ -23,10 +22,10 @@ const Find = {
 
             let conditions = find = Sanitizers.conditionFilter(find);
             
-            conditions.forEach((value) => {
-                let field = Object.keys(value)[0];
-                let corresponding =  Object.values(value)[0];
-                where[field] = corresponding;
+            conditions.forEach((condition) => {
+                let field = Object.keys(condition)[0];
+                let value =  Object.values(condition)[0];
+                where[field] = value;
             });
         }
         if(order){
@@ -53,10 +52,10 @@ const Find = {
 
             let conditions = find = Sanitizers.conditionFilter(find);
             
-            conditions.forEach((value) => {
-                let field = Object.keys(value)[0];
-                let corresponding =  Object.values(value)[0];
-                where[field] = corresponding;
+            conditions.forEach((condition) => {
+                let field = Object.keys(condition)[0];
+                let value =  Object.values(condition)[0];
+                where[field] = value;
             });
         }
         if(order){
