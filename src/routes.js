@@ -57,10 +57,17 @@ routes.post('/auth',
 routes.get('/stores', celebrate({
         [Segments.HEADERS]: Joi.object().keys({
             authorization: Joi.string().required()
+        }).options({ allowUnknown: true }),
+        [Segments.QUERY]: Joi.object().keys({
+            id: Joi.number(),
+            name: Joi.string().min(3).max(100),
+            limit: Joi.number(),
+            like: Joi.boolean()
         }).options({ allowUnknown: true })
     }),
     verifyJwt,
     async (req, res) => {
+        console.log(req.query);
         const stores = await Find.allStores(req.query);
         res.json(stores);
     }
