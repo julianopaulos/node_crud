@@ -62,8 +62,10 @@ routes.get('/stores', celebrate({
             id: Joi.number(),
             name: Joi.string().min(3).max(100),
             limit: Joi.number(),
-            like: Joi.boolean()
-        }).options({ allowUnknown: true })
+            like: Joi.boolean(),
+            order: Joi.string(),
+            ascending: Joi.boolean()
+        })
     }),
     verifyJwt,
     async (req, res) => {

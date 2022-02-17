@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import Store from '../Models/Tables/Store.js';
 import findAll from '../Models/FindAll.js';
 import Sanitizers from "../Utils/FieldSanitizer.js";
@@ -13,23 +14,20 @@ const Find = {
     },
 
     async allStores(conditions){
-        let {find, order, limit} = conditions;
+        let {name, id, like, order, limit, ascending} = conditions;
         let where = {};
         let countLimit = Number.parseInt(1844674407370955);
         let orderCondition = [];
-        
-        if(find){
 
-            let conditions = find = Sanitizers.conditionFilter(find);
+        if(name){
             
-            conditions.forEach((condition) => {
-                let field = Object.keys(condition)[0];
-                let value =  Object.values(condition)[0];
-                where[field] = value;
-            });
         }
+        if(id){
+            where.id = id;
+        }
+
         if(order){
-            orderCondition = Sanitizers.orderSanitizer(order);
+            orderCondition = order;
         }
         if(limit){
             countLimit = Number.parseInt(limit);
