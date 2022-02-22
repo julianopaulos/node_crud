@@ -20,15 +20,16 @@ const Find = {
         let orderCondition = [];
 
         if(name){
-            
+            where.name = (like)?{[Op.like]:`%${name}%`}:name;
         }
         if(id){
             where.id = id;
         }
-
+        
         if(order){
-            orderCondition = order;
+            orderCondition = [[order, (ascending ? 'ASC' : 'DESC')]];
         }
+        
         if(limit){
             countLimit = Number.parseInt(limit);
         }

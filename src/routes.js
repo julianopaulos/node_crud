@@ -69,7 +69,6 @@ routes.get('/stores', celebrate({
     }),
     verifyJwt,
     async (req, res) => {
-        console.log(req.query);
         const stores = await Find.allStores(req.query);
         res.json(stores);
     }
