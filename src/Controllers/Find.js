@@ -20,8 +20,9 @@ const Find = {
         let orderCondition = [];
 
         if(name){
-            where.name = (like)?{[Op.like]:`%${name}%`}:name;
+            where.name = (like) ? {[Op.like]:`%${name}%`} : name;
         }
+
         if(id){
             where.id = id;
         }
