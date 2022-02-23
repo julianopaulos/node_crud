@@ -43,23 +43,25 @@ const Find = {
     },
 
     async allProducts(conditions){
-        let {find, order, limit} = conditions;
+        let {id, description, price, priceOperator, like, order, limit, ascending} = conditions;
         let where = {};
         let countLimit = Number.parseInt(1844674407370955);
         let orderCondition = [];
         
-        if(find){
-
-            let conditions = find = Sanitizers.conditionFilter(find);
-            
-            conditions.forEach((condition) => {
-                let field = Object.keys(condition)[0];
-                let value =  Object.values(condition)[0];
-                where[field] = value;
-            });
+        if(id){
+            where.id = id;
         }
+
+        if(description){
+            where.description = (like)?{[Op.like]:`%${description}%`}:description;
+        }
+
+        if(price){
+            //where.price = (priceOperator)?
+        }
+        
         if(order){
-            orderCondition = Sanitizers.orderSanitizer(order);
+            orderCondition = [[order, (ascending ? 'ASC' : 'DESC')]];
         }
         if(limit){
             countLimit = Number.parseInt(limit);

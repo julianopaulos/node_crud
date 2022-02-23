@@ -130,7 +130,17 @@ routes.put('/store',
 routes.get('/products', celebrate({
         [Segments.HEADERS]: Joi.object().keys({
             authorization: Joi.string().required()
-        }).options({ allowUnknown: true })
+        }).options({ allowUnknown: true }),
+        [Segments.QUERY]: Joi.object().keys({
+            id: Joi.number(),
+            description: Joi.string().min(3).max(100),
+            price: Joi.number(),
+            priceOperator: Joi.string(),
+            limit: Joi.number(),
+            like: Joi.boolean(),
+            order: Joi.string(),
+            ascending: Joi.boolean()
+        })
     }),
     verifyJwt,
     async (req, res) => {
