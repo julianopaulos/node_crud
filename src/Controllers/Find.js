@@ -43,7 +43,7 @@ const Find = {
     },
 
     async allProducts(conditions){
-        let {id, description, price, priceOperator, like, order, limit, ascending} = conditions;
+        let {id, description, price, priceOperator, like, order, ascending, limit} = conditions;
         let where = {};
         let countLimit = Number.parseInt(1844674407370955);
         let orderCondition = [];
