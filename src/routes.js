@@ -135,7 +135,7 @@ routes.get('/products', celebrate({
             id: Joi.number(),
             description: Joi.string().min(3).max(100),
             price: Joi.number(),
-            priceOperator: Joi.string(),
+            priceOperator: Joi.string().min(1).max(2).regex(/[<>=]/),
             limit: Joi.number(),
             like: Joi.boolean(),
             order: Joi.string(),

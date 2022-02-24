@@ -1,3 +1,5 @@
+import { Op } from 'sequelize';
+
 function verifyFieldExists(obj, arr){
     let occurences = 0;
     for(let i = 0; i < arr.length; i++){
@@ -35,6 +37,28 @@ const Functions = {
     orderSanitizer(order){
         order = order.replaceAll('[', '').replaceAll(']', '').replaceAll(' ', '').split(',');
         return [order];
+    },
+
+    operatorSelect(operator){
+        let condition;
+        switch(operator){
+            case ">":
+                condition = Op.gt;
+            break;
+            case "<":
+                condition = Op.lt;
+            break;
+            case ">=":
+                condition = Op.gte;
+            break;
+            case "<=":
+                condition = Op.lte;
+            break;
+            case "<>":
+                condition = Op.ne;
+            break;
+        }
+        return condition;
     }
 };
 

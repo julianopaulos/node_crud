@@ -57,9 +57,9 @@ const Find = {
         }
 
         if(price){
-            //where.price = (priceOperator)?
+            where.price = (!priceOperator || ['=', '=='].includes(priceOperator))?price:{[Sanitizers.operatorSelect(priceOperator)]:price};
         }
-        
+        console.log(where);
         if(order){
             orderCondition = [[order, (ascending ? 'ASC' : 'DESC')]];
         }
