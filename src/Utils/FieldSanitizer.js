@@ -19,6 +19,8 @@ const Functions = {
             case "<>":
                 condition = Op.ne;
             break;
+            default:
+                condition = Op.eq;
         }
         return condition;
     }

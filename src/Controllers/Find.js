@@ -53,13 +53,13 @@ const Find = {
         }
 
         if(description){
-            where.description = (like)?{[Op.like]:`%${description}%`}:description;
+            where.description = (like) ? { [Op.like]: `%${description}%` } : description;
         }
 
         if(price){
-            where.price = (!priceOperator || ['=', '=='].includes(priceOperator))?price:{[Sanitizers.operatorSelect(priceOperator)]:price};
+            where.price = (!priceOperator || ['=', '=='].includes(priceOperator)) ? price : { [Sanitizers.operatorSelect(priceOperator)]: price };
         }
-        console.log(where);
+        
         if(order){
             orderCondition = [[order, (ascending ? 'ASC' : 'DESC')]];
         }
