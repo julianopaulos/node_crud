@@ -136,10 +136,10 @@ routes.get('/products', celebrate({
             description: Joi.string().min(3).max(100),
             price: Joi.number(),
             priceOperator: Joi.string().min(1).max(2).regex(/[<>=]/),
-            limit: Joi.number(),
             like: Joi.boolean(),
             order: Joi.string(),
-            ascending: Joi.boolean()
+            ascending: Joi.boolean(),
+            limit: Joi.number()
         })
     }),
     verifyJwt,
