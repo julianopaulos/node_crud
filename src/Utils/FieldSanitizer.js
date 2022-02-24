@@ -1,15 +1,5 @@
 import { Op } from 'sequelize';
 
-function verifyFieldExists(obj, arr){
-    let occurences = 0;
-    for(let i = 0; i < arr.length; i++){
-        if(Object.keys(obj)[0] === Object.keys(arr[i])[0]){
-            occurences++;
-        }
-    }
-    return (occurences > 0) ? true : false;
-}
-
 const Functions = {
     operatorSelect(operator){
         let condition;
