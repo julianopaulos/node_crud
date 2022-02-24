@@ -11,34 +11,6 @@ function verifyFieldExists(obj, arr){
 }
 
 const Functions = {
-    conditionFilter(where){
-        if(typeof where !== 'string') return [];
-
-        let conditions = [];
-        let field;
-        let value;
-
-        where = where.replaceAll('[', '').replaceAll(']', '').split(',');
-        for(let i = 0; i < where.length; i++){
-                
-            if(i % 2 === 0){
-                field = where[i];
-                value = where[i+1];
-            }else{
-                field = where[i-1];
-                value = where[i];
-            }
-            if(field && value && !verifyFieldExists({[field]: value}, conditions)){
-                conditions.push({[field]: value});
-            }
-        }
-        return conditions;
-    },
-    orderSanitizer(order){
-        order = order.replaceAll('[', '').replaceAll(']', '').replaceAll(' ', '').split(',');
-        return [order];
-    },
-
     operatorSelect(operator){
         let condition;
         switch(operator){
