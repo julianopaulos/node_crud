@@ -134,9 +134,9 @@ routes.get('/products', celebrate({
         [Segments.QUERY]: Joi.object().keys({
             id: Joi.number(),
             description: Joi.string().min(3).max(100),
+            like: Joi.boolean(),
             price: Joi.number(),
             priceOperator: Joi.string().min(1).max(2).regex(/[<>=]/),
-            like: Joi.boolean(),
             order: Joi.string(),
             ascending: Joi.boolean(),
             limit: Joi.number()
