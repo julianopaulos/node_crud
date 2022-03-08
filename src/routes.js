@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { Router } from 'express';
 import jwt from 'jsonwebtoken';
 import { Joi, celebrate, Segments } from 'celebrate';
