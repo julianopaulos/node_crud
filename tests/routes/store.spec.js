@@ -1,5 +1,7 @@
 import fetch from 'cross-fetch';
 import { equal } from 'assert';
+import jwt from 'jsonwebtoken';
+import 'dotenv/config';
 
 describe("store", function() {
     describe("list", function() {
@@ -17,8 +19,23 @@ describe("store", function() {
                     authorization: "abv"
                 }
             });
-            //const responseBody = await response.json();
+            
             equal(response.status, 401);
+        });
+
+        it("should return the code 200", async function() {
+            const token = jwt.sign({ id: 1 }, process.env.SECRET_KEY, {
+                expiresIn: 6000 //sec
+            });
+
+            const response = await fetch("http://localhost:3333/stores", {
+                method: "GET",
+                headers: {
+                    authorization: token
+                }
+            });
+            
+            equal(response.status, 200);
         });
     });
 });
