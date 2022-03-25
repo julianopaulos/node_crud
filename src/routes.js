@@ -20,7 +20,7 @@ routes.post('/user',
             name: Joi.string().min(3).max(200).required(),
             username: Joi.string().min(3).max(100).required(),
             email: Joi.string().email().required(),
-            password: Joi.string().min(8).max(100).required()
+            password: Joi.string().min(8).max(50).required()
         })
     }),
     verifyUser.username,
@@ -37,7 +37,7 @@ routes.post('/auth',
     celebrate({
         [Segments.BODY]: Joi.object().keys({
             username: Joi.string().min(3).max(100).required(),
-            password: Joi.string().min(8).max(100).required()
+            password: Joi.string().required()
         })
     }),
     verifyUser.auth,

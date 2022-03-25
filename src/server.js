@@ -12,7 +12,7 @@ import { errors } from 'celebrate';
 import routes from './routes.js';
 
 const corsOptions = {
-    origin: 'http://localhost'
+    origin: 'http://localhost:3000'
 };
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
